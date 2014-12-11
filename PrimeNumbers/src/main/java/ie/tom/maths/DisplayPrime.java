@@ -5,6 +5,7 @@ import java.util.Queue;
 
 public class DisplayPrime {
 	Queue<Integer> prime = new LinkedList<Integer>();
+	ConsoleColor con = new ConsoleColor();
 	
 	public void display10line(int range, int[] primes) {
 		load(primes);
@@ -16,6 +17,7 @@ public class DisplayPrime {
 					System.out.print(i+1 + ", ");
 				}			
 			} else {
+				System.out.println(con.ANSI_RED + "This text is red!" + con.ANSI_RESET);
 				System.out.print(i+1 + ", ");
 			}
 		}
