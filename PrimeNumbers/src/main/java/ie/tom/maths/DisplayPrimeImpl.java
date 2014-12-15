@@ -14,13 +14,20 @@ public class DisplayPrimeImpl implements DisplayPrime {
 	public void checkPrime(int number) {
 		CalculatePrime prime = new CalculatePrime(number+10);
 		boolean check = prime.isPrime(number);
-		print(check, number);
+		println(check, number);
 	}
 	private void print(boolean check, int number) {
 		if(check == true) {
 			System.out.print(number + "*, ");
 		} else {
 			System.out.print(number + ", ");
+		}
+	}
+	private void println(boolean check, int number) {
+		if(check == true) {
+			System.out.print("\n" + number + "*, ");
+		} else {
+			System.out.print("\n" + number + ", ");
 		}
 	}
 }
