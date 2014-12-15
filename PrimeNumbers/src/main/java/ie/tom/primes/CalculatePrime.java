@@ -1,4 +1,4 @@
-package ie.tom.maths;
+package ie.tom.primes;
 
 import java.util.Arrays;
 

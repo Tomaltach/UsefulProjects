@@ -1,4 +1,4 @@
-package ie.tom.maths;
+package ie.tom.primes;
 
 public class ConsoleColor {
 	public static final String ANSI_RESET = "\u001B[0m";

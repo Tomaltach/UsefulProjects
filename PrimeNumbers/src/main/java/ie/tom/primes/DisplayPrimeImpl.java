@@ -1,33 +1,38 @@
-package ie.tom.maths;
+package ie.tom.primes;
 
 public class DisplayPrimeImpl implements DisplayPrime {
 	ConsoleColor con = new ConsoleColor();
-	
-	public void display20line(int range) {
+
+	public void display10Line(int range) {
 		CalculatePrime prime = new CalculatePrime(range);
 		boolean[] primes = prime.fillSieve();
 		for(int i=0; i<range; i++) {
-			//System.out.println(con.ANSI_RED + "This text is red!" + con.ANSI_RESET);
 			print(primes[i], i);
+			if ((i + 1) % 10 == 0) {
+				System.out.println();
+			}
+		}
+	}
+	public void display20Line(int range) {
+		CalculatePrime prime = new CalculatePrime(range);
+		boolean[] primes = prime.fillSieve();
+		for(int i=0; i<range; i++) {
+			print(primes[i], i);
+			if ((i + 1) % 20 == 0) {
+				System.out.println();
+			}
 		}
 	}
 	public void checkPrime(int number) {
 		CalculatePrime prime = new CalculatePrime(number+10);
 		boolean check = prime.isPrime(number);
-		println(check, number);
+		print(check, number);
 	}
 	private void print(boolean check, int number) {
 		if(check == true) {
 			System.out.print(number + "*, ");
 		} else {
 			System.out.print(number + ", ");
-		}
-	}
-	private void println(boolean check, int number) {
-		if(check == true) {
-			System.out.print("\n" + number + "*, ");
-		} else {
-			System.out.print("\n" + number + ", ");
 		}
 	}
 }
