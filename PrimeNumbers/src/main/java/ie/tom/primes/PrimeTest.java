@@ -12,6 +12,7 @@ public class PrimeTest {
 		
 		testDisplay10Line();
 		testDisplay20Line();
+		testDisplay10LinePrimeOnly();
 		testCheckPrime();
 		
 		scanner.close();
@@ -39,6 +40,18 @@ public class PrimeTest {
 			System.out.println("ERROR! Must enter a number!");
 		}
 		prime.display20Line(range);
+	}
+	private static void testDisplay10LinePrimeOnly() {
+		DisplayPrime prime = new DisplayPrimeImpl();
+		System.out.print("\nEnter the range you want to check: ");
+		String input = scanner.nextLine();
+		int range = 0;
+		try {
+			range = Integer.parseInt(input);
+		} catch(NumberFormatException e) {
+			System.out.println("ERROR! Must enter a number!");
+		}
+		prime.display10LinePrimeOnly(range);
 	}
 	private static void testCheckPrime() {
 		DisplayPrime prime = new DisplayPrimeImpl();
