@@ -1,4 +1,4 @@
-package ie.tom.pong.single;
+package ie.tom.pong;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

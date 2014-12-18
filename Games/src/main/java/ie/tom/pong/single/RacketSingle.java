@@ -1,23 +1,25 @@
 package ie.tom.pong.single;
 
+import ie.tom.pong.Racket;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
-public class Racket {
+public class RacketSingle implements Racket {
 	private static final int Y = 330;
 	private static final int WIDTH = 60;
 	private static final int HEIGHT = 10;
 	
-	private PongSingleImpl pong;
+	private PongSingleImpl pongSingle;
 	private int x = 0;
 	private int xa = 0;
 
-	public Racket(PongSingleImpl pong) {
-		this.pong = pong;
+	public RacketSingle(PongSingleImpl pongSingle) {
+		this.pongSingle = pongSingle;
 	}
 	public void moveRacket() {
-		if(x + xa > 0 && x + xa < pong.getWidth() - WIDTH) {
+		if(x + xa > 0 && x + xa < pongSingle.getWidth() - WIDTH) {
 			x = x + xa;
 		}
 	}
@@ -29,16 +31,16 @@ public class Racket {
 	}
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-			xa = -pong.speed;
+			xa = -pongSingle.speed;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			xa = pong.speed;
+			xa = pongSingle.speed;
 		}
 	}
 	public Rectangle getBounds() {
 		return new Rectangle(x, Y, WIDTH, HEIGHT);		
 	}
-	public int getTop() {
+	public int getTopY() {
 		return Y;
 	}
 }

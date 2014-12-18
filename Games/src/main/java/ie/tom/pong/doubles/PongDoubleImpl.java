@@ -1,9 +1,4 @@
-package ie.tom.pong.single;
-
-import ie.tom.pong.Ball;
-import ie.tom.pong.Controls;
-import ie.tom.pong.Pong;
-import ie.tom.pong.Racket;
+package ie.tom.pong.doubles;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,21 +7,26 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyListener;
 
+import ie.tom.pong.Ball;
+import ie.tom.pong.Controls;
+import ie.tom.pong.Pong;
+import ie.tom.pong.Racket;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class PongSingleImpl extends JPanel implements Pong {
-	private static final long serialVersionUID = 395170916112772728L;
-	
-	public Ball ball = new BallSingle(this);
-	public Racket racket = new RacketSingle(this);
+public class PongDoubleImpl extends JPanel implements Pong {
+	private static final long serialVersionUID = 1213641690101513457L;
+
+	public Ball ball = new BallDouble(this);
+	public Racket racket = new RacketDouble(this);
 	public int speed = 1;
-	
-	public PongSingleImpl() {
+
+	public PongDoubleImpl() {
 		KeyListener controls = new Controls(racket);
 		addKeyListener(controls);
 		setFocusable(true);
-	}	
+	}
 	public void paint(Graphics graphics) {
 		super.paint(graphics);
 		Graphics2D g2d = (Graphics2D) graphics;
