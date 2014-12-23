@@ -11,9 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
+import org.joda.time.LocalDate;
+
 import net.java.dev.designgridlayout.DesignGridLayout;
 
 public class TopPanel {
+	private JLabel displayDate;
 
 	public JPanel build(JPanel top) {
 		top = new JPanel();
@@ -43,5 +46,23 @@ public class TopPanel {
 		layout.row().grid().add(new JSeparator(), 2);
 				
 		return top;
+	}
+	private String checkDate(String days) {
+		String date = processDate(days);
+		return date;
+	}
+	private String processDate(String daysIn) {
+		String date = "";
+		int days = 0;
+		LocalDate today;
+		try {
+			days = Integer.parseInt(daysIn);
+			today = LocalDate.now().plusDays(days);
+			
+		} catch(Exception e) {
+			return "Number!";
+		}
+		date = today.getDayOfMonth() + "/" + today.getMonthOfYear() + "/" + today.getYear();
+		return date;
 	}
 }
