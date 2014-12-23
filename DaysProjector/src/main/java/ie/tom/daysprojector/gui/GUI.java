@@ -1,7 +1,8 @@
 package ie.tom.daysprojector.gui;
 
+import ie.tom.daysprojector.gui.panel.CenterPanel;
+
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,12 +12,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
+
+import net.java.dev.designgridlayout.DesignGridLayout;
 
 import org.joda.time.LocalDate;
 
 @SuppressWarnings("serial")
-public class GUI extends JFrame {
+public class GUI extends JFrame { 
+	private static final int WIDTH = 270;
+	private static final int HEIGHT = 400;
 	private JLabel displayDate;
 	
 	public GUI() {
@@ -25,7 +31,7 @@ public class GUI extends JFrame {
 		init();
 		
 		pack();
-		setSize(250,100);
+		setSize(WIDTH, HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);		
 	}
@@ -39,9 +45,10 @@ public class GUI extends JFrame {
 		this.add(center, BorderLayout.CENTER);
 	}
 	private JPanel createTopPanel(JPanel top) {
-		top = new JPanel(new FlowLayout());
+		top = new JPanel();
+		DesignGridLayout layout = new DesignGridLayout(top);
 		
-		JLabel lblDays = new JLabel("Number of days: ");
+		JLabel lblDays = new JLabel("Number of days");
 		final JTextField txtDays = new JTextField("", 5);
 		txtDays.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
@@ -52,30 +59,28 @@ public class GUI extends JFrame {
 			public void keyReleased(KeyEvent arg0) {}
 			public void keyTyped(KeyEvent arg0) {}
 		});
-		JButton go = new JButton("Go");
-		go.addActionListener(new ActionListener() {
+		displayDate = new JLabel("Waiting...");
+		JButton btnCheck = new JButton("Check");
+		btnCheck.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				checkDate(txtDays.getText());
+				displayDate.setText(checkDate(txtDays.getText()));
 			}
 		});
 		
-		top.add(lblDays);
-		top.add(txtDays);
-		top.add(go);
-		
+		layout.row().grid().add(lblDays).add(txtDays);
+		layout.row().grid().add(displayDate).empty().add(btnCheck);
+		layout.row().grid().add(new JSeparator(), 2);
+				
 		return top;
 	}
 	private JPanel createCenterPanel(JPanel center) {
-		center = new JPanel(new FlowLayout());		
-		displayDate = new JLabel("Waiting...");
-				
-		center.add(displayDate);
-		
+		CenterPanel panel = new CenterPanel();
+		center = panel.build(center);
 		return center;
 	}
-	private void checkDate(String days) {
+	private String checkDate(String days) {
 		String date = processDate(days);
-		displayDate.setText(date);
+		return date;
 	}
 	private String processDate(String daysIn) {
 		String date = "";
@@ -86,7 +91,7 @@ public class GUI extends JFrame {
 			today = LocalDate.now().plusDays(days);
 			
 		} catch(Exception e) {
-			return "Must enter a number!";
+			return "Number!";
 		}
 		date = today.getDayOfMonth() + "/" + today.getMonthOfYear() + "/" + today.getYear();
 		return date;
