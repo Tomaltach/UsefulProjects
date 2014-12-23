@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 import org.joda.time.DateTime;
@@ -98,6 +99,8 @@ public class CenterPanel {
 		layout.row().grid().add(lblDNOB).add(txtDNOB).add(lblDNOBDate);
 		layout.row().grid().add(lblUseBy).add(txtUseBy).add(lblUseByDate);
 		layout.row().grid().empty(2).add(btnCheck);
+		layout.emptyRow();
+		layout.row().grid().add(new JSeparator(), 2);
 		
 		return center;
 	}

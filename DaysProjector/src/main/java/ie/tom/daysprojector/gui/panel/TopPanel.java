@@ -43,6 +43,7 @@ public class TopPanel {
 		
 		layout.row().grid().add(lblDays).add(txtDays);
 		layout.row().grid().add(displayDate).empty().add(btnCheck);
+		layout.emptyRow();
 		layout.row().grid().add(new JSeparator(), 2);
 				
 		return top;
