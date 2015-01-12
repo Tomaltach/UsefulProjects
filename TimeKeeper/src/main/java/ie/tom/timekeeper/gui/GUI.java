@@ -1,12 +1,17 @@
 package ie.tom.timekeeper.gui;
 
+import java.awt.BorderLayout;
+
 import ie.tom.timekeeper.gui.panel.AddPanel;
 import ie.tom.timekeeper.gui.panel.Panel;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
+	@SuppressWarnings("unused")
 	private String user;
 
 	public GUI(String user) {
@@ -23,10 +28,15 @@ public class GUI extends JFrame {
 		setVisible(true);
 	}
 	private void build() {
-		buildAddPanel();		
+		JPanel panel = new JPanel();
+		JTabbedPane tabbed = new JTabbedPane();
+		tabbed.addTab("Add", buildAddPanel());
+		
+		panel.add(tabbed, BorderLayout.CENTER);
+		add(panel);
 	}
-	private void buildAddPanel() {
+	private JPanel buildAddPanel() {
 		Panel addPanel = new AddPanel();
-		add(addPanel.createPanel());		
+		return addPanel.createPanel();		
 	}
 }
