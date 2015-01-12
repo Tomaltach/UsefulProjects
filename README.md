@@ -9,3 +9,6 @@ A single pong game currently.
 
 Days Projector;
 A application to project the date from a user defined number of days from the current date.
+
+Time Keeper;
+To keep track of time of cardio exercise and distance to give pace and totals.
