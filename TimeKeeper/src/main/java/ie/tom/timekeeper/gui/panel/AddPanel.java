@@ -18,7 +18,7 @@ import org.joda.time.LocalDate;
 import net.java.dev.designgridlayout.DesignGridLayout;
 
 public class AddPanel implements Panel {
-	private final static String[] TYPE = {"Walk", "Jog", "Run", "Sprint"};
+	private final static String[] TYPE = {"Walk", "Jog", "Run", "Sprint", "Cycle"};
 	private final static String[] UNIT = {"Kilometer", "Mile"}; 
 
 	@Override
