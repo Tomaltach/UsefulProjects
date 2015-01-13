@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import ie.tom.timekeeper.gui.panel.AddPanel;
 import ie.tom.timekeeper.gui.panel.Panel;
+import ie.tom.timekeeper.gui.panel.ViewPanel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,15 +29,21 @@ public class GUI extends JFrame {
 		setVisible(true);
 	}
 	private void build() {
-		JPanel panel = new JPanel();
+		JPanel cPanel = new JPanel();
+                cPanel.setLayout(new BorderLayout());
 		JTabbedPane tabbed = new JTabbedPane();
 		tabbed.addTab("Add", buildAddPanel());
+		tabbed.addTab("View", buildViewPanel());
 		
-		panel.add(tabbed, BorderLayout.CENTER);
-		add(panel);
+		cPanel.add(tabbed);
+		add(cPanel);
 	}
 	private JPanel buildAddPanel() {
 		Panel addPanel = new AddPanel();
 		return addPanel.createPanel();		
+	}
+	private JPanel buildViewPanel() {
+		Panel viewPanel = new ViewPanel();
+		return viewPanel.createPanel();		
 	}
 }
