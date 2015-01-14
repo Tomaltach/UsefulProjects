@@ -9,7 +9,7 @@ import ie.tom.timekeeper.gui.Login;
 public class TimeKeeper {
 
 	public static void main(String[] args) {
-                new SetupDatabase();
+		new SetupDatabase();
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {

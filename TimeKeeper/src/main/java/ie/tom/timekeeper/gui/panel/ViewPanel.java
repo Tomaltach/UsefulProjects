@@ -15,7 +15,7 @@ public class ViewPanel implements Panel {
 	private final static String[] TYPE = {"All", "Walk", "Jog", "Run", "Sprint", "Cycle"};
 	private final static String[] UNIT = {"All", "Kilometer", "Mile"}; 
     
-        @Override
+	@Override
 	public JPanel createPanel() {
 		final JComboBox<String> cmbMonth = new JComboBox<String>(MONTH);
 		final JComboBox<String> cmbYear = new JComboBox<String>(YEAR);             
