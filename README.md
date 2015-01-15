@@ -12,3 +12,6 @@ A application to project the date from a user defined number of days from the cu
 
 Time Keeper;
 To keep track of time of cardio exercise and distance to give pace and totals.
+
+Results Calculator;
+Allows students or lecturers to calculate grades for an overall grade and a grade from an exam.
