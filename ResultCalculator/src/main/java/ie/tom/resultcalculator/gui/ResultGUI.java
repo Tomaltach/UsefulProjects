@@ -20,6 +20,7 @@ public class ResultGUI extends JFrame {
 
 		pack();
 		setSize(500, 500);
+		setResizable(false);
 		setVisible(true);
 	}
 	private void build() {
