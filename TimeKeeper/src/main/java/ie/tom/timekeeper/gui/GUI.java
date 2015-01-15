@@ -26,6 +26,7 @@ public class GUI extends JFrame {
 
 		pack();
 		setSize(750, 500);
+		setResizable(false);
 		setVisible(true);
 	}
 	private void build() {

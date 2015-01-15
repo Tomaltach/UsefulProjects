@@ -2,13 +2,13 @@ package ie.tom.timekeeper.gui.panel;
 
 import ie.tom.timekeeper.gui.panel.feature.PromptTextField;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -19,7 +19,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -31,13 +30,21 @@ public class AddPanel implements Panel {
 	private final static String[] TYPE = {"Walk", "Jog", "Run", "Sprint", "Cycle"};
 	private final static String[] UNIT = {"Kilometer", "Mile"}; 
 	private final static String DATE_PATTERN = "dd/MM/yyyy";
-	public static DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
+	public static DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
 	
 	private JTextField txtDate;
 	private JCalendarButton btnCalendar;
+	private JTextArea taOutput;
 
 	@Override
 	public JPanel createPanel() {
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(createTop(), BorderLayout.NORTH);
+		panel.add(createBottom(), BorderLayout.CENTER);
+		
+		return panel;
+	}
+	private JPanel createTop(){
 		JLabel lblDate = new JLabel("Date");
 		txtDate = new JTextField(currentDate(), 20);
 		btnCalendar = new JCalendarButton();
@@ -48,23 +55,7 @@ public class AddPanel implements Panel {
 		final JComboBox<String> cmbType = new JComboBox<String>(TYPE);
 		final JComboBox<String> cmbUnit = new JComboBox<String>(UNIT);
 		JButton btnAddRecord = new JButton("Add");
-		final JTextArea taOutput = new JTextArea(20, 5);
-		JScrollPane scrollOutput = new JScrollPane(taOutput);
 		
-		txtDate.addMouseListener(new MouseListener() {
-			@Override
-		    public void mouseClicked(MouseEvent e) {
-
-		    }
-			@Override
-			public void mouseEntered(MouseEvent arg0) {}
-			@Override
-			public void mouseExited(MouseEvent arg0) {}
-			@Override
-			public void mousePressed(MouseEvent arg0) {}
-			@Override
-			public void mouseReleased(MouseEvent arg0) {}
-		});
 		btnCalendar.addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
             	dateOnlyPopupChanged(evt);
@@ -95,27 +86,32 @@ public class AddPanel implements Panel {
 			}
 		});
 		txtDate.setEditable(false);
-		taOutput.setEditable(false);
 		cmbType.setSelectedIndex(1);
 		
 		JPanel panel = new JPanel();
 		DesignGridLayout layout = new DesignGridLayout(panel);
-		layout.row().grid(lblDate).add(txtDate).grid(lblTime).add(txtTime).grid(lblDistance).add(txtDistance).grid().add(cmbType).grid().add(cmbUnit).grid().add(btnAddRecord);
-		layout.row().bar();
-		layout.row().grid().add(scrollOutput);
+		layout.row().grid(lblDate).add(txtDate).add(btnCalendar).grid(lblTime).add(txtTime).grid(lblDistance).add(txtDistance);
+		layout.row().grid().add(cmbType).grid().add(cmbUnit).grid().add(btnAddRecord);
 		
 		return panel;		
 	}
+	private JPanel createBottom() {
+		JPanel panel = new JPanel();
+
+		taOutput = new JTextArea(22, 65);
+		JScrollPane scrollOutput = new JScrollPane(taOutput);
+
+		taOutput.setEditable(false);
+		
+		panel.add(scrollOutput);
+		
+		return panel;
+	}
 	private String currentDate() {
-		String date = "";
-		LocalDate today;
-		try {
-			today = LocalDate.now();			
-		} catch(Exception e) {
-			return "Number!";
-		}
-		date = today.getDayOfMonth() + "/" + today.getMonthOfYear() + "/" + today.getYear();
-		return date;
+		Date d = new Date();
+		DateFormat df = new SimpleDateFormat("dd/MM/yy");
+		
+		return "" + df.format(d);
 	}
 	private boolean checkDate(String date) {
 		try {
