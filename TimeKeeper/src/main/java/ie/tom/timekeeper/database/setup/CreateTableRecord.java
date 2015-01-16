@@ -1,8 +1,7 @@
 package ie.tom.timekeeper.database.setup;
 
-import static ie.tom.timekeeper.database.setup.SetupDatabase.DB_URL;
-import static ie.tom.timekeeper.database.setup.SetupDatabase.PASS;
-import static ie.tom.timekeeper.database.setup.SetupDatabase.USER;
+import ie.tom.timekeeper.Resources;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,7 +18,7 @@ public class CreateTableRecord implements CreateTable {
 
 			//STEP 2: Open a connection
 			System.out.println("Connecting to a selected database...");
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			conn = DriverManager.getConnection(Resources.DB_URL, Resources.USER, Resources.PASS);
 			System.out.println("Connected database successfully...");
 
 			//STEP 3: Execute a query
@@ -27,7 +26,7 @@ public class CreateTableRecord implements CreateTable {
 			stmt = conn.createStatement();
 
 			String sql = "CREATE TABLE IF NOT EXISTS records " +
-					"(id INTEGER not NULL, " +
+					"(id INTEGER not NULL AUTO_INCREMENT, " +
 					" date DATE not NULL, " + 
 					" time VARCHAR(50) not NULL, " + 
 					" distance DOUBLE not NULL, " + 
@@ -44,7 +43,7 @@ public class CreateTableRecord implements CreateTable {
 		} finally {
 			try {
 				if(stmt!=null) {
-					conn.close();
+					stmt.close();
 				}
 			} catch(SQLException se) {
 				se.printStackTrace();

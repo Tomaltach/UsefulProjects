@@ -1,5 +1,6 @@
 package ie.tom.timekeeper.gui.panel;
 
+import ie.tom.timekeeper.entity.Record;
 import ie.tom.timekeeper.gui.panel.feature.PromptTextField;
 
 import java.awt.BorderLayout;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,6 +37,7 @@ public class AddPanel implements Panel {
 	private JTextField txtDate;
 	private JCalendarButton btnCalendar;
 	private JTextArea taOutput;
+	private Record record;
 
 	@Override
 	public JPanel createPanel() {
@@ -63,26 +66,33 @@ public class AddPanel implements Panel {
         });
 		btnAddRecord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String record = "";
+				String output = "";
 				if(txtDate.getText().equals("") || checkDate(txtDate.getText()) == false) {
-					record += "Fill in date!\n";
+					output += "Fill in date!\n";
 				}
 				if(txtTime.getText().equals("hh:mm:ss:ms")) {
-					record += "Fill in time!\n";
+					output += "Fill in time!\n";
 				}
 				if(txtDistance.getText().equals("")) {
-					record += "Fill in distance!\n";
+					output += "Fill in distance!\n";
 				} 
-				if(record.equals("")) {
-					record += txtDate.getText() + ", ";
-					record += txtTime.getText() + ", ";
-					record += txtDistance.getText() + ", ";
-					record += cmbType.getSelectedItem() + ", ";
-					record += cmbUnit.getSelectedItem();
+				if(output.equals("")) {
+					output += txtDate.getText() + ", ";
+					output += txtTime.getText() + ", ";
+					output += txtDistance.getText() + ", ";
+					output += cmbType.getSelectedItem() + ", ";
+					output += cmbUnit.getSelectedItem();
+					
+					record = new Record();
+					record.setDate(getDate(txtDate.getText()));
+					record.setTime(txtTime.getText());
+					record.setDistance(Double.parseDouble(txtDistance.getText()));
+					record.setType(cmbType.getSelectedItem().toString());
+					record.setUnit(cmbUnit.getSelectedItem().toString());
 				}
 				
-				taOutput.append(record);
-				System.out.println(record);
+				taOutput.append(output);
+				System.out.println(output);
 			}
 		});
 		txtDate.setEditable(false);
@@ -106,6 +116,19 @@ public class AddPanel implements Panel {
 		panel.add(scrollOutput);
 		
 		return panel;
+	}
+	private java.sql.Date getDate(String dateIn) {
+		DateFormat df = new SimpleDateFormat("dd/MM/yy");
+		Date utilDate = null;
+		java.sql.Date sqlDate = null;
+		try {
+			utilDate = df.parse(dateIn);
+		    sqlDate = new java.sql.Date(utilDate.getDate());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return sqlDate;
 	}
 	private String currentDate() {
 		Date d = new Date();

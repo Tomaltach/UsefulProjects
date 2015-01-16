@@ -1,19 +1,13 @@
 package ie.tom.timekeeper.database.setup;
 
+import ie.tom.timekeeper.Resources;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SetupDatabase {
-	// JDBC driver name and database URL
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	static final String DB_URL = "jdbc:mysql://localhost/cardio_records";
-	static final String DB_NAME = "cardio_records";
-
-	// Database credentials
-	static final String USER = "root";
-	static final String PASS = "";
 	private Connection conn;
 
 	public SetupDatabase() {
@@ -33,7 +27,7 @@ public class SetupDatabase {
 	private boolean checkTableExists() {
 		try {
 			DatabaseMetaData meta = conn.getMetaData();
-			ResultSet res = meta.getTables(null, null, null, new String[] {DB_NAME});
+			ResultSet res = meta.getTables(null, null, null, new String[] {Resources.DB_NAME});
 			while (res.next()) {
 				try {
 					System.out.println(
