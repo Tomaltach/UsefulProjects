@@ -1,5 +1,6 @@
 package ie.tom.timekeeper.gui.panel;
 
+import ie.tom.timekeeper.database.handlers.RecordDao;
 import ie.tom.timekeeper.entity.Record;
 import ie.tom.timekeeper.gui.panel.feature.PromptTextField;
 
@@ -38,8 +39,11 @@ public class AddPanel implements Panel {
 	private JCalendarButton btnCalendar;
 	private JTextArea taOutput;
 	private Record record;
-
-	@Override
+	private RecordDao update;
+	
+	public AddPanel(RecordDao update) {
+		this.update = update;
+	}
 	public JPanel createPanel() {
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(createTop(), BorderLayout.NORTH);
@@ -81,7 +85,7 @@ public class AddPanel implements Panel {
 					output += txtTime.getText() + ", ";
 					output += txtDistance.getText() + ", ";
 					output += cmbType.getSelectedItem() + ", ";
-					output += cmbUnit.getSelectedItem();
+					output += cmbUnit.getSelectedItem() + "\n";
 					
 					record = new Record();
 					record.setDate(getDate(txtDate.getText()));
@@ -89,6 +93,8 @@ public class AddPanel implements Panel {
 					record.setDistance(Double.parseDouble(txtDistance.getText()));
 					record.setType(cmbType.getSelectedItem().toString());
 					record.setUnit(cmbUnit.getSelectedItem().toString());
+					
+					update.insertRecord(record);
 				}
 				
 				taOutput.append(output);

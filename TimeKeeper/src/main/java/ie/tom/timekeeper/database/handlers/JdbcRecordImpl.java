@@ -7,21 +7,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
 
-public class UpdateDatabaseImpl implements UpdateDatabase {
+public class JdbcRecordImpl implements RecordDao {
 	private Connection con;
-	private Statement stmt;
+	private PreparedStatement ps;
 	
 	@Override
 	public void insertRecord(final Record record) {
 		try {
 			Class.forName(Resources.JDBC_DRIVER).newInstance();
 			con = DriverManager.getConnection(Resources.DB_URL, Resources.USER, Resources.PASS);			
-			stmt = con.createStatement();
 			
-			String insert = "";
-			PreparedStatement ps = con.prepareStatement(
+			ps = con.prepareStatement(
 				"INSERT INTO records(" +
 					"date, " +
 					"time, " +
@@ -37,13 +35,13 @@ public class UpdateDatabaseImpl implements UpdateDatabase {
 			ps.setString(4, record.getType());
 			ps.setString(5, record.getUnit());
 			
-			stmt.execute(insert);
+			ps.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(stmt!=null) {
-					stmt.close();
+				if(ps!=null) {
+					ps.close();
 				}
 			} catch(SQLException se) {
 				se.printStackTrace();
@@ -58,7 +56,14 @@ public class UpdateDatabaseImpl implements UpdateDatabase {
 		}
 	}
 	@Override
-	public void updateRecord(Record record) {
-				
+	public List<Record> listRecords() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Record> listAll() {
+		
+		
+		return null;
 	}
 }

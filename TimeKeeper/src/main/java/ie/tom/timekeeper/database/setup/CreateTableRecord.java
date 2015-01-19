@@ -14,15 +14,12 @@ public class CreateTableRecord implements CreateTable {
 		Statement stmt = null;
 		try {
 			//STEP 1: Register JDBC driver
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(Resources.JDBC_DRIVER);
 
 			//STEP 2: Open a connection
-			System.out.println("Connecting to a selected database...");
 			conn = DriverManager.getConnection(Resources.DB_URL, Resources.USER, Resources.PASS);
-			System.out.println("Connected database successfully...");
 
 			//STEP 3: Execute a query
-			System.out.println("Creating table in given database...");
 			stmt = conn.createStatement();
 
 			String sql = "CREATE TABLE IF NOT EXISTS records " +
@@ -35,7 +32,6 @@ public class CreateTableRecord implements CreateTable {
 					" PRIMARY KEY ( id ))"; 
 
 			stmt.executeUpdate(sql);
-			System.out.println("Created table in given database...");
 		} catch(SQLException se) {
 			se.printStackTrace();
 		} catch(Exception e) {

@@ -1,5 +1,7 @@
 package ie.tom.timekeeper.database.setup;
 
+import ie.tom.timekeeper.Resources;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,15 +15,19 @@ public class CreateDatabase {
 
 	public void createDatabase() {
 		try { 
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/?user=root");
+			Class.forName(Resources.JDBC_DRIVER);
+			
+			conn = DriverManager.getConnection(Resources.DB_URL, Resources.USER, Resources.PASS);
 			stmt = conn.createStatement();
 			stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS cardio_records");
 		} catch (SQLException ex) {
 			Logger.getLogger(CreateDatabase.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		} finally {
 			try {
 				if(stmt!=null) {
-					conn.close();
+					stmt.close();
 				}
 			} catch(SQLException se) {
 				se.printStackTrace();

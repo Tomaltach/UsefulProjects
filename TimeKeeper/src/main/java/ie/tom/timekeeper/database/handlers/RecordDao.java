@@ -1,8 +1,11 @@
 package ie.tom.timekeeper.database.handlers;
 
+import java.util.List;
+
 import ie.tom.timekeeper.entity.Record;
 
-public interface UpdateDatabase {
+public interface RecordDao {
 	void insertRecord(Record record);
-	void updateRecord(Record record);
+	List<Record> listRecords();
+	List<Record> listAll();
 }

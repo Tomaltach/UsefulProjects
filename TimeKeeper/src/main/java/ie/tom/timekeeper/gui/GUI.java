@@ -2,6 +2,8 @@ package ie.tom.timekeeper.gui;
 
 import java.awt.BorderLayout;
 
+import ie.tom.timekeeper.database.handlers.JdbcRecordImpl;
+import ie.tom.timekeeper.database.handlers.RecordDao;
 import ie.tom.timekeeper.gui.panel.AddPanel;
 import ie.tom.timekeeper.gui.panel.Panel;
 import ie.tom.timekeeper.gui.panel.ViewPanel;
@@ -12,13 +14,12 @@ import javax.swing.JTabbedPane;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame {
-	@SuppressWarnings("unused")
-	private String user;
+	private RecordDao record;
 
 	public GUI(String user) {
 		super("" + user + "'s Records");
-
-		this.user = user;
+		
+		record = new JdbcRecordImpl();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -40,11 +41,11 @@ public class GUI extends JFrame {
 		add(cPanel);
 	}
 	private JPanel buildAddPanel() {
-		Panel addPanel = new AddPanel();
+		Panel addPanel = new AddPanel(record);
 		return addPanel.createPanel();		
 	}
 	private JPanel buildViewPanel() {
-		Panel viewPanel = new ViewPanel();
+		Panel viewPanel = new ViewPanel(record);
 		return viewPanel.createPanel();		
 	}
 }
