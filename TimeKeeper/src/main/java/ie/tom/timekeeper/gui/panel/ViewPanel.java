@@ -5,6 +5,8 @@ import ie.tom.timekeeper.entity.Record;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.ListIterator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,10 +23,10 @@ public class ViewPanel implements Panel {
 	private final static String[] UNIT = {"All", "Kilometer", "Mile"}; 
 	
 	private Record record;
-	private RecordDao update;
+	private RecordDao view;
     
-	public ViewPanel(RecordDao update) {
-		this.update = update;
+	public ViewPanel(RecordDao view) {
+		this.view = view;
 	}
 
 	@Override
@@ -34,7 +36,7 @@ public class ViewPanel implements Panel {
 		final JComboBox<String> cmbType = new JComboBox<String>(TYPE);
 		final JComboBox<String> cmbUnit = new JComboBox<String>(UNIT);
 		JButton btnViewRecords = new JButton("View");
-		JButton btnViewAllRecords = new JButton("View");
+		JButton btnViewAllRecords = new JButton("View All");
 		final JTextArea taOutput = new JTextArea(20, 5);
 		JScrollPane scrollOutput = new JScrollPane(taOutput);
 		
@@ -52,7 +54,19 @@ public class ViewPanel implements Panel {
 		});
 		btnViewAllRecords.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String output = "";
+				String output = "\nid\tDate\tTime\tDistance\tType\tUnit\n";
+
+				List<Record> list = view.listAll();
+				ListIterator<Record> loop = list.listIterator();
+				while(loop.hasNext()) {
+					record = loop.next();
+					output += record.getId() + "\t";
+					output += record.getDate() + "\t";
+					output += record.getTime() + "\t";
+					output += record.getDistance() + "\t";
+					output += record.getType() + "\t";
+					output += record.getUnit() + "\n";
+				}
 				
 				taOutput.append(output);
 				System.out.println(output);

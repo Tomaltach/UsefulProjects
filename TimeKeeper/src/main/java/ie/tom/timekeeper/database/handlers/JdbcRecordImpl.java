@@ -6,7 +6,9 @@ import ie.tom.timekeeper.entity.Record;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcRecordImpl implements RecordDao {
@@ -62,8 +64,44 @@ public class JdbcRecordImpl implements RecordDao {
 	}
 	@Override
 	public List<Record> listAll() {
+		List<Record> records = new ArrayList<Record>();
+		try {
+			Class.forName(Resources.JDBC_DRIVER).newInstance();
+			con = DriverManager.getConnection(Resources.DB_URL, Resources.USER, Resources.PASS);			
+			
+			ps = con.prepareStatement("SELECT * FROM records");			
+			ResultSet results = ps.executeQuery();
+			
+			while(results.next()) {
+				Record record = new Record();
+				
+				record.setId(results.getInt("id"));
+				record.setDate(results.getDate("date"));
+				record.setTime(results.getString("time"));
+				record.setType(results.getString("type"));
+				record.setUnit(results.getString("unit"));
+				
+				records.add(record);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(ps!=null) {
+					ps.close();
+				}
+			} catch(SQLException se) {
+				se.printStackTrace();
+			}
+			try {
+				if(con!=null) {
+					con.close();
+				}
+			} catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
 		
-		
-		return null;
+		return records;
 	}
 }
