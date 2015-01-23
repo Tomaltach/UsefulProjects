@@ -129,7 +129,7 @@ public class AddPanel implements Panel {
 		java.sql.Date sqlDate = null;
 		try {
 			utilDate = df.parse(dateIn);
-		    sqlDate = new java.sql.Date(utilDate.getDate());
+		    sqlDate = new java.sql.Date(utilDate.getTime());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
