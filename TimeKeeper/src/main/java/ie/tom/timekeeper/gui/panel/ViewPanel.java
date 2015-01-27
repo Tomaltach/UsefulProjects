@@ -18,7 +18,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
 
 public class ViewPanel implements Panel {
 	private final static String[] MONTH = {"All", "January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-	private final static String[] YEAR = {"All", "2014"};
+	private final static String[] YEAR = {"All", "2014", "2015"};
 	private final static String[] TYPE = {"All", "Walk", "Jog", "Run", "Sprint", "Cycle"};
 	private final static String[] UNIT = {"All", "Kilometer", "Mile"}; 
 	
@@ -42,11 +42,24 @@ public class ViewPanel implements Panel {
 		
 		btnViewRecords.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String output = "";
-				output += cmbMonth.getSelectedItem() + ", ";
-				output += cmbYear.getSelectedItem() + ", ";
-				output += cmbType.getSelectedItem() + ", ";
-				output += cmbUnit.getSelectedItem();
+				int month = cmbMonth.getSelectedIndex();
+				String year = cmbYear.getSelectedItem() + "";
+				String type = cmbType.getSelectedItem() + "";
+				String unit = cmbUnit.getSelectedItem() + "";
+				
+				String output = "\nid\tDate\tTime\tDistance\tType\tUnit\n";
+
+				List<Record> list = view.listRecords(month, year, type, unit);
+				ListIterator<Record> loop = list.listIterator();
+				while(loop.hasNext()) {
+					record = loop.next();
+					output += record.getId() + "\t";
+					output += record.getDate() + "\t";
+					output += record.getTime() + "\t";
+					output += record.getDistance() + "\t";
+					output += record.getType() + "\t";
+					output += record.getUnit() + "\n";
+				}
 				
 				taOutput.append(output);
 				System.out.println(output);
