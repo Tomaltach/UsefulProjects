@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Tue Jan 27 12:43:40 GMT 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014b-2b6b-3360-000006937d20 
+on database directory C:\Users\tdonegan\git\UsefulProjects\TimeKeeper\database\cardio_records with class loader sun.misc.Launcher$AppClassLoader@17c1e333 
+Loaded from file:/C:/Users/tdonegan/Documents/Jar%20Folder/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0-b147
+user.dir=C:\Users\tdonegan\git\UsefulProjects\TimeKeeper
+os.name=Windows NT (unknown)
+os.arch=amd64
+os.version=6.2
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
